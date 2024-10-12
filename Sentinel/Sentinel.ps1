@@ -1,8 +1,8 @@
-param(
-    [Parameter(Mandatory=$true)]$ResourceGroup,
-    [Parameter(Mandatory=$true)]$Workspace,    
-    [Parameter(Mandatory=$true)]$Location
-)
+# param(
+#     [Parameter(Mandatory=$true)]$ResourceGroup,
+#     [Parameter(Mandatory=$true)]$Workspace,    
+#     [Parameter(Mandatory=$true)]$Location
+# )
 
 
 function CheckModules($module) {
