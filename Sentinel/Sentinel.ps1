@@ -1,8 +1,8 @@
-# param(
-#     [Parameter(Mandatory=$true)]$ResourceGroup,
-#     [Parameter(Mandatory=$true)]$Workspace,    
-#     [Parameter(Mandatory=$true)]$Location
-# )
+param(
+    [Parameter(Mandatory=$true)]$ResourceGroup,
+    [Parameter(Mandatory=$true)]$Workspace,    
+    [Parameter(Mandatory=$true)]$Location
+)
 
 
 function CheckModules($module) {
@@ -81,7 +81,8 @@ if (($solutions | Where-Object Name -eq 'SecurityInsights').Enabled) {
     Write-Host "Azure Sentinel is already installed on workspace $($Workspace)"
 }
 else {    
-    New-AzMonitorLogAnalyticsSolution -Type SecurityInsights -ResourceGroupName $ResourceGroup -Location $WorkspaceObject.Location -WorkspaceResourceId $WorkspaceObject.ResourceId
+    # New-AzMonitorLogAnalyticsSolution -Type SecurityInsights -ResourceGroupName $ResourceGroup -Location $WorkspaceObject.Location -WorkspaceResourceId $WorkspaceObject.ResourceId
+    New-AzSentinelOnboardingState -ResourceGroupName $ResourceGroup -WorkspaceName $Workspace -Name "default"
 }
 
 $msTemplates = Get-AzSentinelAlertRuleTemplate -WorkspaceName $Workspace -ResourceGroupName $ResourceGroup | where Kind -EQ MicrosoftSecurityIncidentCreation
