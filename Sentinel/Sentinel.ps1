@@ -5,6 +5,12 @@ param(
 )
 
 
+# URL 
+# https://github.com/Azure/Azure-Sentinel/tree/master/Tools/Sentinel-All-In-One
+# https://techcommunity.microsoft.com/t5/microsoft-sentinel-blog/announcing-microsoft-sentinel-all-in-one-v2/ba-p/3800037
+# https://techcommunity.microsoft.com/t5/microsoft-sentinel-blog/azure-sentinel-all-in-one-accelerator/ba-p/1807933
+# https://learn.microsoft.com/en-us/azure/sentinel/sentinel-content-centralize
+
 function CheckModules($module) {
     $installedModule = Get-InstalledModule -Name $module -ErrorAction SilentlyContinue
     if ($null -eq $installedModule) {
@@ -74,6 +80,14 @@ try {
     New-AzOperationalInsightsWorkspace -Location $Location -Name $Workspace -Sku pergb2018 -ResourceGroupName $ResourceGroup
 
 }
+
+
+# Threat Intelligence data connector
+Write-Host "Installing Threat Intelligence data connector" -ForegroundColor Blue
+$deployThreatIntelligenceconnector = New-AzSentinelDataConnector -ResourceGroupName $ResourceGroup -WorkspaceName $workspace -Kind 'MicrosoftThreatIntelligence' -BingSafetyPhishingURL Enabled -BingSafetyPhishingUrlLookbackPeriod All  -MicrosoftEmergingThreatFeed Enabled -MicrosoftEmergingThreatFeedLookbackPeriod All
+
+
+
 
 $solutions = Get-AzOperationalInsightsIntelligencePack -resourcegroupname $ResourceGroup -WorkspaceName $Workspace -WarningAction:SilentlyContinue
 
