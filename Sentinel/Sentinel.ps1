@@ -85,7 +85,7 @@ try {
 # Threat Intelligence data connector
 Write-Host "Installing Threat Intelligence data connector" -ForegroundColor Blue
 $deployThreatIntelligenceconnector = New-AzSentinelDataConnector -ResourceGroupName $ResourceGroup -WorkspaceName $workspace -Kind 'MicrosoftThreatIntelligence' -BingSafetyPhishingURL Enabled -BingSafetyPhishingUrlLookbackPeriod All  -MicrosoftEmergingThreatFeed Enabled -MicrosoftEmergingThreatFeedLookbackPeriod All
-
+exit 
 
 
 
