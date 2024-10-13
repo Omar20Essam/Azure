@@ -82,13 +82,6 @@ try {
 }
 
 
-# Threat Intelligence data connector
-Write-Host "Installing Threat Intelligence data connector" -ForegroundColor Blue
-$deployThreatIntelligenceconnector = New-AzSentinelDataConnector -ResourceGroupName $ResourceGroup -WorkspaceName $workspace -Kind 'MicrosoftThreatIntelligence' -BingSafetyPhishingURL Enabled -BingSafetyPhishingUrlLookbackPeriod All  -MicrosoftEmergingThreatFeed Enabled -MicrosoftEmergingThreatFeedLookbackPeriod All
-exit 
-
-
-
 $solutions = Get-AzOperationalInsightsIntelligencePack -resourcegroupname $ResourceGroup -WorkspaceName $Workspace -WarningAction:SilentlyContinue
 
 if (($solutions | Where-Object Name -eq 'SecurityInsights').Enabled) {
@@ -98,6 +91,15 @@ else {
     # New-AzMonitorLogAnalyticsSolution -Type SecurityInsights -ResourceGroupName $ResourceGroup -Location $WorkspaceObject.Location -WorkspaceResourceId $WorkspaceObject.ResourceId
     New-AzSentinelOnboardingState -ResourceGroupName $ResourceGroup -WorkspaceName $Workspace -Name "default"
 }
+
+# Threat Intelligence data connector
+Write-Host "Installing Threat Intelligence data connector" -ForegroundColor Blue
+$deployThreatIntelligenceconnector = New-AzSentinelDataConnector -ResourceGroupName $ResourceGroup -WorkspaceName $workspace -Kind 'MicrosoftThreatIntelligence' -BingSafetyPhishingURL Enabled -BingSafetyPhishingUrlLookbackPeriod All  -MicrosoftEmergingThreatFeed Enabled -MicrosoftEmergingThreatFeedLookbackPeriod All
+
+
+
+
+
 
 $msTemplates = Get-AzSentinelAlertRuleTemplate -WorkspaceName $Workspace -ResourceGroupName $ResourceGroup | where Kind -EQ MicrosoftSecurityIncidentCreation
 
